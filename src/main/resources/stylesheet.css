@@ -40,6 +40,10 @@ Description: Css Stylesheet for PDFNamer
     -col-btn-nav-highlighted: -col-icon-btn-nav;
     -col-btn-nav-textfill: #FFFFFF;
 
+    -col-btn-list-pdf-background: transparent;
+    -col-btn-list-pdf-border: #434554;
+    -col-btn-pdf-list-pdf-text-fill: #FFFFFF;
+
     -col-btn-titlemenu: transparent;
     -col-btn-titlemenu-exit-background-hovered: #E81123;
     -col-btn-titlemenu-window-background-hovered: #3D3E67;
@@ -52,8 +56,8 @@ Description: Css Stylesheet for PDFNamer
     -col-btn-description-text-fill: #FFFFFF;
 
     -col-scrollpane-background: transparent;
-    -col-scrollbar-border: transparent;
-    -col-scrollbar-thumb: -col-pane-nav-background;
+    -col-scrollbar-increment-border: transparent;
+    -col-scrollbar-thumb: #4E4C4B;
     -col-scrollpane-corner: transparent;
     -col-scrollbar-increment-arrow: #FFFFFF;
 
@@ -241,21 +245,95 @@ Description: Css Stylesheet for PDFNamer
 
 }
 
-/*List View - Design*/
-
-.list-view{
-
-    -fx-background-color: -col-list-view-background;
-	-fx-background-insets: 1px 1px 1px 1px;
-	-fx-background-radius: 0px;
-	-fx-border-color: -col-list-view-background;
-	-fx-border-width: 1px 1px 1px 1px;
-	-fx-border-radius: 0px;
-	-fx-text-fill: -col-list-text-fill;
-	-fx-accent: -col-list-view-accent;
+/*Scroll Pane - Design*/
+.scroll-pane {
+    -fx-background-color: -col-pane-content-background;
 }
 
-.list-view > .scrollbar:vertical .thumb{
+.scroll-pane .sroll-bar:hover{
 
-    -fx-background-color: #FFFFFF;
+	-fx-background-color: -col-pane-content-foreground;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: -col-pane-content-object-border;
+}
+
+/*.scroll-pane:hover{
+
+	-fx-background-color: -col-pane-content-foreground;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: -col-pane-content-object-border;
+}*/
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color: -col-scrollpane-corner;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: -col-scrollpane-corner;
+    -fx-border-color: -col-scrollbar-increment-border;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: -col-scrollpane-corner;
+    -fx-border-color: -col-scrollpane-corner;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: -col-scrollbar-thumb;
+    -fx-background-radius: 3em;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: -col-scrollpane-corner;
+}
+
+/* SCROLL BUTTONS inside the Scroll Pane */
+.btn-list-pdf {
+
+	-fx-background-color: -col-btn-description-background;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: -col-btn-list-pdf-border;
+}
+.btn-list-pdf:hover{
+
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: #FFFFFF;
+
+}
+.btn-list-pdf:selected{
+
+	-fx-background-color: -col-btn-description-background-hovered;
+	-fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: #FFFFFF;
+	-fx-text-fill: -col-btn-pdf-list-pdf-text-fill;
+}
+#testcopybutton{
+
+	-fx-background-color: -col-btn-description-background;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: -col-btn-list-pdf-border;
+
+}
+#testcopybutton:hover{
+
+	-fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: #FFFFFF;
+}
+#testcopybutton:selected{
+
+	-fx-background-color: -col-btn-description-background-hovered;
+	-fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: #FFFFFF;
+	-fx-text-fill: -col-btn-pdf-list-pdf-text-fill;
 }

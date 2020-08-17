@@ -9,6 +9,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -32,6 +33,8 @@ public class Controller implements Initializable {
             pan_settings_alfrescoimport_content, pan_pdfnamer_scans_content, pan_pdfnamer_excel_content,
             pan_pdfnamer_rename_content, pan_alfrescoimport_import_content;
     @FXML private ChoiceBox cb_settings_pdfnamer_billtype, cb_settings_alfrescoimport_trate;
+
+    @FXML private VBox vbx_pdfnamer_scans_content;
 
     //INIT
     @Override
@@ -68,7 +71,18 @@ public class Controller implements Initializable {
         cb_settings_pdfnamer_billtype.getItems().add("ER");
         cb_settings_pdfnamer_billtype.getItems().add("KK");
 
+        //		Working Example for Automated Buttons
+
+        for(int i = 0; i < 100; i++) {
+            ToggleButton copybutton = new ToggleButton("YOUR PDF COULD BE RENAMED HERE" + (i + 1));
+            copybutton.setMaxSize(270,40);
+            copybutton.setMinSize(270,40);
+            copybutton.setPrefSize(270,40);
+            copybutton.setId("testcopybutton");
+            vbx_pdfnamer_scans_content.getChildren().add(copybutton);
+        }
     }
+
     //GETTER - SETTER
     public void setStage(Stage s){
         this.s = s;
@@ -159,6 +173,10 @@ public class Controller implements Initializable {
     }
 
     //CONTENT - PDFNAMER - SCAN
+
+    public void VBoxClicked(){
+
+    }
 
     //CONTENT - PDFNAMER - EXCEL
 

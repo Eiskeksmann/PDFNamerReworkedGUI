@@ -11,17 +11,34 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Pair;
+import util.Constants;
+import util.ExcelReader;
+import util.PathReader;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
+import java.util.StringTokenizer;
 
 public class Controller implements Initializable {
 
     //MEMBER
+    private File home;
+    private Constants c;
     private Stage s;
     private double pos_x, pos_y;
     private NavDescManager navdesc;
     private DescriptionContentPackage dcp_settings, dcp_pdfnamer, dcp_alfrescoimport;
+    private String loc;
+    private PathReader pr;
+    private ExcelReader er;
+    private DC dc;
+    private FC fc;
+    private ScrollableVBoxManager svm;
 
     @FXML private ToggleButton cmd_nav_settings, cmd_nav_pdfnamer, cmd_nav_alfrescoimport,
             cmd_settings_description_allgemein, cmd_settings_description_pdfnamer,
@@ -32,14 +49,21 @@ public class Controller implements Initializable {
     @FXML private Pane pan_settings_allgemein_content, pan_settings_pdfnamer_content,
             pan_settings_alfrescoimport_content, pan_pdfnamer_scans_content, pan_pdfnamer_excel_content,
             pan_pdfnamer_rename_content, pan_alfrescoimport_import_content;
-    @FXML private ChoiceBox cb_settings_pdfnamer_billtype, cb_settings_alfrescoimport_trate;
+    @FXML private ChoiceBox<String> cb_settings_pdfnamer_billtype, cb_settings_alfrescoimport_trate;
 
     @FXML private VBox vbx_pdfnamer_scans_content;
+    @FXML private Button cmd_pdfnamer_import_scans, cmd_pdfnamer_excel_import;
+
 
     //INIT
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        c = new Constants();
+        loc = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        home = new File(loc);
+        dc = new DC("Folder Open", home);
+        fc = new FC("File Open",c.getPdffilter(),home);
         //Navigation Logic
         dcp_settings = new DescriptionContentPackage(pan_settings_description);
         dcp_settings.addPackage(cmd_settings_description_allgemein, pan_settings_allgemein_content);
@@ -64,23 +88,16 @@ public class Controller implements Initializable {
         navdesc.setSelected(cmd_nav_settings);
 
         //Content Initiation
+        //Settings
         cb_settings_alfrescoimport_trate.getItems().add("10");
         cb_settings_alfrescoimport_trate.getItems().add("50");
         cb_settings_alfrescoimport_trate.getItems().add("100");
 
         cb_settings_pdfnamer_billtype.getItems().add("ER");
         cb_settings_pdfnamer_billtype.getItems().add("KK");
-
-        //		Working Example for Automated Buttons
-
-        for(int i = 0; i < 100; i++) {
-            ToggleButton copybutton = new ToggleButton("YOUR PDF COULD BE RENAMED HERE" + (i + 1));
-            copybutton.setMaxSize(270,40);
-            copybutton.setMinSize(270,40);
-            copybutton.setPrefSize(270,40);
-            copybutton.setId("testcopybutton");
-            vbx_pdfnamer_scans_content.getChildren().add(copybutton);
-        }
+        cb_settings_pdfnamer_billtype.setValue("ER");
+        //PDFNamer
+        svm = new ScrollableVBoxManager(vbx_pdfnamer_scans_content);
     }
 
     //GETTER - SETTER
@@ -173,12 +190,52 @@ public class Controller implements Initializable {
     }
 
     //CONTENT - PDFNAMER - SCAN
+    public void cmdPDFNamerImportScansClicked(){
 
-    public void VBoxClicked(){
+        File f = dc.getDc().showDialog(s);
+        if(f != null){
+            //scan_path = f.getPath();
+            //txt_scan_path.setText(scan_path);
+            pr = new PathReader(f,"PDF", cb_settings_pdfnamer_billtype.getValue(), "SCAN");
+            if(pr.getProcces() != null && pr.getProcces().length > 0){
 
+                for(File pdf : pr.getProcces()) svm.addLink(pdf);
+
+                //am.setScan_condition(true);
+                //if(cb_scan_setouput.isSelected()) {
+                //    am.setOutput_condition(true);
+                //    output_path = scan_path;
+                //}
+                //else am.setOutput_condition(false);
+                //cmd_sheet_path.setDisable(false);
+            } else {
+
+                //scan_path = "";
+                System.out.println("Pfad enthält nur ungültige Dokumente");
+                //lst_scan.getItems().clear();
+                pr = null;
+                //am.setScan_condition(false);
+            }
+        }
     }
 
     //CONTENT - PDFNAMER - EXCEL
+    public void cmdPDFNamerImportExcelClicked() throws IOException {
+
+        fc.ChangeFilter(c.getXlsfilter());
+        File f1 = fc.getFc().showOpenDialog(s);
+        if(f1 != null) {
+            if(new File(f1.getParent() +"\\GUIExport.xlsx").exists()) {
+
+                File f2 = new File(f1.getParent() + "\\GUIExport.xlsx");
+                ExcelReader er = new ExcelReader(f2,f1, "A");
+                er.formContent();
+
+            } else System.out.println("GUIExport.xlsx - not found or renamed in Directory | " + f1.getPath());
+        }
+        // f1 Path : C:\Users\Administrator\Desktop\TEST\GUIExport.xlsx
+
+    }
 
     //CONTENT - PDFNAMER - RENAME
 

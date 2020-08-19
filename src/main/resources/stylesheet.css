@@ -315,7 +315,7 @@ Description: Css Stylesheet for PDFNamer
     -fx-border-color: #FFFFFF;
 	-fx-text-fill: -col-btn-pdf-list-pdf-text-fill;
 }
-#testcopybutton{
+#pdfbuttonview{
 
 	-fx-background-color: -col-btn-description-background;
     -fx-border-width: 1px 1px 1px 1px;
@@ -323,13 +323,13 @@ Description: Css Stylesheet for PDFNamer
     -fx-border-color: -col-btn-list-pdf-border;
 
 }
-#testcopybutton:hover{
+#pdfbuttonview:hover{
 
 	-fx-border-width: 1px 1px 1px 1px;
     -fx-border-radius: 0px;
     -fx-border-color: #FFFFFF;
 }
-#testcopybutton:selected{
+#pdfbuttonview:selected{
 
 	-fx-background-color: -col-btn-description-background-hovered;
 	-fx-border-width: 1px 1px 1px 1px;

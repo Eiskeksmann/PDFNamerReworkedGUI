@@ -29,7 +29,7 @@ public class ExcelReader {
     private Cell cell;
     private Row row;
     private CellReference ref;
-    private int col; //test
+    private int col;
 
     private ArrayList<String> content;
 

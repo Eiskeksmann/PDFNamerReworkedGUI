@@ -1,0 +1,339 @@
+/*
+/*
+Date: 06.08.2020
+Editor: Benjamin Mellawa
+Description: Css Stylesheet for PDFNamer 
+*/ 
+
+/* Constants - COLOR */ 
+*{
+    -col-pane-title-background: #464775;
+
+    -col-pane-nav-background: #3B3A3A;
+
+    -col-pane-description-background: #2D2C2C;
+
+    -col-pane-content-background: #201F1F;
+    -col-pane-content-foreground: #252423;
+    -col-pane-content-foreground-highlighted: #3B3A39;
+    -col-pane-content-object-border: transparent;
+    -col-pane-content-object-border-hovered: #434554;
+
+    -col-icon-btn-nav:#FFFFFF;
+    -col-icon-excel: #217346;
+    -col-icon-textfile: #FFFFFF;
+    -col-icon-csvfile: #FFFFFF;
+
+    -col-cbx-background: #2D2C2C;
+    -col-cbx-bordercolor: transparent;
+
+    -col-txt-background: #2D2C2C;
+    -col-txt-border: transparent;
+    -col-txt-accent: #535884;
+    -col-txt-textfill: #FFFFFF;
+    -col-txt-textfill-highlighted: #000000;
+
+    -col-btn-nav: transparent;
+    -col-btn-nav-background-hovered: #434554;
+    -col-btn-nav-background-pressed: #535884;
+    -col-btn-nav-bordercolor: #FFFFFF;
+    -col-btn-nav-highlighted: -col-icon-btn-nav;
+    -col-btn-nav-textfill: #FFFFFF;
+
+    -col-btn-list-pdf-background: transparent;
+    -col-btn-list-pdf-border: #434554;
+    -col-btn-pdf-list-pdf-text-fill: #FFFFFF;
+
+    -col-btn-titlemenu: transparent;
+    -col-btn-titlemenu-exit-background-hovered: #E81123;
+    -col-btn-titlemenu-window-background-hovered: #3D3E67;
+    -col-btn-titlemenu-standard-background-hovered: #5C5E9D;
+    -col-list-item-highlighted: #605E5C;
+
+    -col-btn-description-background: transparent;
+    -col-btn-description-background-hovered: #3B3A39;
+    -col-btn-description-background-pressed: #605E5C;
+    -col-btn-description-text-fill: #FFFFFF;
+
+    -col-scrollpane-background: transparent;
+    -col-scrollbar-increment-border: transparent;
+    -col-scrollbar-thumb: #4E4C4B;
+    -col-scrollpane-corner: transparent;
+    -col-scrollbar-increment-arrow: #FFFFFF;
+
+    -col-list-view-background: tranpsarent;
+    -col-list-view-accent: #605E5C;
+    -col-list-text-fill: #FFFFFF;
+}
+
+/* Pane - Design */
+.pane-title{
+
+    -fx-background-color: -col-pane-title-background;
+
+}
+
+.pane-nav{
+
+    -fx-background-color: -col-pane-nav-background;
+
+}
+
+.pane-description{
+
+    -fx-background-color: -col-pane-description-background;
+}
+
+.pane-content{
+
+    -fx-background-color: -col-pane-content-background;
+
+}
+.pane-content-object:hover{
+
+    -fx-border-color: -col-pane-content-object-border-hovered;
+}
+
+.pane-content-object{
+
+    -fx-background-color: -col-pane-content-foreground;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: -col-pane-content-object-border;
+}
+/* Button - Design */
+
+/*SIDE MENU BUTTONS*/
+.btn-nav{
+
+    -fx-background-color: transparent;
+    -fx-background-radius: 0px;
+    -fx-text-fill: -col-btn-nav-textfill;
+
+}
+.btn-nav:hover{
+
+    -fx-background-color: -col-btn-nav-background-hovered;
+
+}
+.btn-nav:pressed{
+
+    -fx-background-color: -col-btn-nav-background-pressed;
+    -fx-border-color: -col-btn-nav-bordercolor;
+    -fx-border-width: 0px 0px 0px 3px;
+    -fx-border-radius: 0px;
+}
+.btn-nav:selected{
+    -fx-background-color: -col-btn-nav-background-pressed;
+    -fx-border-color: -col-btn-nav-bordercolor;
+    -fx-border-width: 0px 0px 0px 3px;
+    -fx-border-radius: 0px;
+}
+/*TITLE MENU BUTTONS*/
+.btn-titlemenu-exit{
+
+    -fx-background-color: -col-btn-titlemenu;
+}
+.btn-titlemenu-exit:hover{
+
+    -fx-background-color: -col-btn-titlemenu-exit-background-hovered;
+}
+.btn-titlemenu-window{
+
+    -fx-background-color: -col-btn-titlemenu;
+}
+.btn-titlemenu-window:hover{
+
+    -fx-background-color: -col-btn-titlemenu-window-background-hovered;
+}
+.btn-titlemenu-standard{
+
+    -fx-background-color: -col-btn-titlemenu;
+}
+.btn-titlemenu-standard:hover{
+
+    -fx-background-color: -col-btn-titlemenu-standard-background-hovered;
+}
+/*DESCRIPTION PANE BUTTONS*/
+.btn-description{
+
+    -fx-background-color: -col-btn-description-background;
+    -fx-text-fill: -col-btn-description-text-fill; 
+}
+.btn-description:hover{
+
+    -fx-background-color: -col-btn-description-background-hovered;
+}
+.btn-description:pressed{
+
+    -fx-background-color: -col-btn-description-background-pressed;
+}
+.btn-description:selected{
+
+    -fx-background-color: -col-btn-description-background-pressed;
+}
+
+/*CONTENT PANE BUTTONS*/
+.btn-content{
+
+}
+.btn-content:hover{
+
+}
+
+/*CONTENT PANE CHECKBOX*/
+.cbx-content .box{
+
+    -fx-background-color: -col-cbx-background;
+	-fx-border-color: -col-cbx-bordercolor;
+	-fx-background-insets: 1px 1px 1px 1px;
+	-fx-border-width: 3px 3px 3px 3px;
+}
+.cbx-content:selected .mark{
+
+    -fx-background-color: -col-txt-textfill;
+}
+
+
+/*CONTENT PANE TEXTFIELD*/
+.txt-content{
+
+    -fx-background-color: -col-txt-background;
+    -fx-background-radius: 0px;
+    -fx-border-color: -col-txt-border;
+    -fx-border-width: 3px 3px 3px 3px;
+    -fx-border-radius: 0px;
+    -fx-text-fill: -col-txt-textfill;
+    -fx-accent: -col-txt-accent;
+}
+
+/*CHOICE BOX DESIGN*/
+.cb-content{
+
+    -fx-background-color: -col-txt-background;
+    -fx-background-radius: 0px;
+    -fx-border-color: -col-txt-border;
+    -fx-border-width: 3px 3px 3px 3px;
+    -fx-border-radius: 0px;
+    -fx-mark-color: -col-txt-textfill;
+    -fx-font-size: 7pt;
+}
+.cb-content > .label{
+
+    -fx-text-fill: -col-txt-textfill;
+}
+.cb-content .context-menu {
+    -fx-background-color: -col-txt-background;
+}
+.cb-content .menu-item:focused {
+    -fx-background-color: -col-btn-description-background-hovered;
+}
+.cb-content .menu-item > .label{
+    -fx-text-fill: -col-txt-textfill;
+}
+.cb-content .menu-item:focused > .label {
+
+    -fx-text-fill: -col-txt-textfill-highlighted;
+}
+/*List View - Design*/
+
+/* Icon - Design */
+
+.icon-btn-nav{
+
+    -fx-fill: -col-icon-btn-nav;
+
+}
+
+/*Scroll Pane - Design*/
+.scroll-pane {
+    -fx-background-color: -col-pane-content-background;
+}
+
+.scroll-pane .sroll-bar:hover{
+
+	-fx-background-color: -col-pane-content-foreground;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: -col-pane-content-object-border;
+}
+
+/*.scroll-pane:hover{
+
+	-fx-background-color: -col-pane-content-foreground;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: -col-pane-content-object-border;
+}*/
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color: -col-scrollpane-corner;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: -col-scrollpane-corner;
+    -fx-border-color: -col-scrollbar-increment-border;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: -col-scrollpane-corner;
+    -fx-border-color: -col-scrollpane-corner;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: -col-scrollbar-thumb;
+    -fx-background-radius: 3em;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: -col-scrollpane-corner;
+}
+
+/* SCROLL BUTTONS inside the Scroll Pane */
+.btn-list-pdf {
+
+	-fx-background-color: -col-btn-description-background;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: -col-btn-list-pdf-border;
+}
+.btn-list-pdf:hover{
+
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: #FFFFFF;
+
+}
+.btn-list-pdf:selected{
+
+	-fx-background-color: -col-btn-description-background-hovered;
+	-fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: #FFFFFF;
+	-fx-text-fill: -col-btn-pdf-list-pdf-text-fill;
+}
+#pdfbuttonview{
+
+	-fx-background-color: -col-btn-description-background;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: -col-btn-list-pdf-border;
+
+}
+#pdfbuttonview:hover{
+
+	-fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: #FFFFFF;
+}
+#pdfbuttonview:selected{
+
+	-fx-background-color: -col-btn-description-background-hovered;
+	-fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: #FFFFFF;
+	-fx-text-fill: -col-btn-pdf-list-pdf-text-fill;
+}

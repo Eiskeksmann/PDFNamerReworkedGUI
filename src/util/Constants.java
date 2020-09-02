@@ -14,6 +14,7 @@ public class Constants {
         xlsfilter = new ArrayList<Pair<String, String>>();
 
         pdffilter.add(new Pair<String, String>("Scans","*.pdf"));
+        xlsfilter.add(new Pair<String, String>("Excel","*.xltx"));
         xlsfilter.add(new Pair<String, String>("Excel","*.xlsx"));
 
     }

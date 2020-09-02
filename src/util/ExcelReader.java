@@ -1,6 +1,8 @@
 package util;
 
+import org.apache.poi.ss.formula.WorkbookEvaluator;
 import org.apache.poi.ss.formula.functions.Column;
+import org.apache.poi.ss.formula.functions.Na;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
@@ -12,15 +14,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ExcelReader {
 
 
     private File gui_export, bereiter; //File we try to read from
     private ArrayList<NameSheme> shemes; //NameList we get after we successfully read from File
+    private ArrayList<String> input;
 
     private XSSFWorkbook wb_gui, wb_bereiter;
     private XSSFSheet sheet;
@@ -29,15 +30,17 @@ public class ExcelReader {
     private Cell cell;
     private Row row;
     private CellReference ref;
-    private int col;
+    private int col, filenames;
 
     private ArrayList<String> content;
 
-    public ExcelReader(File gui_export, File bereiter, String col_name) throws IOException {
+    public ExcelReader(File gui_export, File bereiter, String col_name, String sheet_name) throws IOException {
 
         this.content = new ArrayList<String>();
         this.gui_export = gui_export;
         this.bereiter = bereiter;
+        this.filenames = 0;
+        this.input = new ArrayList<String>();
 
         this.wb_bereiter = new XSSFWorkbook(new FileInputStream(this.bereiter));
         this.fe_bereiter = wb_bereiter.getCreationHelper().createFormulaEvaluator();
@@ -49,11 +52,13 @@ public class ExcelReader {
         wbs.put(bereiter.getName(), fe_bereiter);
         wbs.put(gui_export.getName(), fe_gui);
         fe_bereiter.setupReferencedWorkbooks(wbs);
-        fe_bereiter.evaluateAll();
+        //fe_bereiter.evaluateAll();
 
-        this.sheet = wb_bereiter.getSheetAt(0);
-        //this.col = getRowIndexByName(col_name);
-        this.col = 1;
+        this.sheet = wb_bereiter.getSheet(sheet_name);
+        this.col = getRowIndexByName(col_name);
+        System.out.println("Col:" + col);
+        System.out.println("Sheet: " + sheet.getSheetName());
+        //this.col = 1;
         //this.path = path;
         //this.wb = new XSSFWorkbook(new FileInputStream(this.path));
         //this.sheet = wb.getSheet(tab);
@@ -64,20 +69,35 @@ public class ExcelReader {
 
     public void formContent(){
 
+        int i = 0;
         for(Row r : sheet){
 
-            Cell c = r.getCell(col - 1);
+            Cell c = r.getCell(col);
             if(c != null) {
                 switch (c.getCellType()) {
                     case STRING:
                         if (c.getStringCellValue().equals("")) return;
                         break;
                     case FORMULA:
+                        if(c.getStringCellValue().equals("")) {
+                            System.out.println("ended after: " + i + "lines :D");
+                            filenames = i -1;
+                            return;
+                        }
+                        input.add(c.getStringCellValue());
                         System.out.println(c.getStringCellValue());
+                        i++;
                         break;
                 }
             } else return;
         }
+    }
+
+    public void sortInput(){
+
+        Collections.sort(input);
+        System.out.println(input);
+        CreateNameShemeList();
     }
 
     private int getRowIndexByName(String column){
@@ -98,27 +118,11 @@ public class ExcelReader {
         return -1;
     }
 
-    public boolean CreateNameShemeList(){
+    private void CreateNameShemeList(){
 
-        boolean condition = false;
-        if(sheet != null) {
-            for (int i = 2; !condition; i++) {
-
-                row = sheet.getRow(i);
-                if (row != null) {
-                    cell = row.getCell(col);
-                } else return false;
-                if (cell != null) {
-                    cell.setCellType(CellType.STRING);
-                } else return false;
-
-                if (cell.getStringCellValue().equals("")) {
-                    condition = true;
-                    return true;
-                } else shemes.add(new NameSheme(cell.getStringCellValue()));
-            }
-        } else return false;
-        return false;
+        for(String s : input){
+            shemes.add(new NameSheme(s));
+        }
     }
     public NameSheme getPivot(){
         return shemes.get(0);
@@ -129,14 +133,17 @@ public class ExcelReader {
     }
     public ArrayList<NameSheme> trimShemes(int pivot){
 
-        int old = shemes.size();
-        for(NameSheme ns : shemes)
-            if(ns.getIdAsInt() <= pivot)
-                shemes.remove(ns);
+        ArrayList<NameSheme> trimmed = new ArrayList<NameSheme>();
 
-        int diff = old - shemes.size();
-        System.out.println("Removed " + diff + " Items from NameShemeList");
-        return shemes;
+        for(NameSheme ns : shemes){
+
+            if(ns.getIdAsInt() > pivot){
+
+                trimmed.add(ns);
+            }
+        }
+        System.out.println("Removed " + (shemes.size() - trimmed.size()) + " Items from NameShemeList");
+        shemes = trimmed;
+        return trimmed;
     }
-
 }

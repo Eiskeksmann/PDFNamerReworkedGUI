@@ -40,9 +40,12 @@ Description: Css Stylesheet for PDFNamer
     -col-btn-nav-highlighted: -col-icon-btn-nav;
     -col-btn-nav-textfill: #FFFFFF;
 
-    -col-btn-list-pdf-background: transparent;
-    -col-btn-list-pdf-border: #434554;
-    -col-btn-pdf-list-pdf-text-fill: #FFFFFF;
+    -col-btn-list-background: transparent;
+    -col-btn-list-border: #605E5C;
+    -col-btn-list-pdf-text-fill: #FFFFFF;
+    -col-btn-list-border-hovered: #434554;
+    -col-btn-list-border-selected: #FFFFFF;
+    -col-btn-list-text-fill: #FFFFFF;
 
     -col-btn-titlemenu: transparent;
     -col-btn-titlemenu-exit-background-hovered: #E81123;
@@ -315,25 +318,34 @@ Description: Css Stylesheet for PDFNamer
     -fx-border-color: #FFFFFF;
 	-fx-text-fill: -col-btn-pdf-list-pdf-text-fill;
 }
-#pdfbuttonview{
+#scrollablevboxbuttonview{
 
 	-fx-background-color: -col-btn-description-background;
     -fx-border-width: 1px 1px 1px 1px;
     -fx-border-radius: 0px;
-    -fx-border-color: -col-btn-list-pdf-border;
+    -fx-border-color: -col-btn-list-border;
+    -fx-text-fill: -col-btn-list-pdf-text-fill;
 
 }
-#pdfbuttonview:hover{
+#scrollablevboxbuttonview:hover{
 
 	-fx-border-width: 1px 1px 1px 1px;
     -fx-border-radius: 0px;
-    -fx-border-color: #FFFFFF;
+    -fx-border-color: -col-btn-list-border-hovered;
 }
-#pdfbuttonview:selected{
+#scrollablevboxbuttonview:selected{
 
 	-fx-background-color: -col-btn-description-background-hovered;
 	-fx-border-width: 1px 1px 1px 1px;
     -fx-border-radius: 0px;
-    -fx-border-color: #FFFFFF;
-	-fx-text-fill: -col-btn-pdf-list-pdf-text-fill;
+    -fx-border-color: -col-btn-list-border-selected;
+	-fx-text-fill: -col-btn-list-text-fill;
+}
+#scrollablevboxbuttonview:selected:hover{
+
+	-fx-background-color: -col-btn-description-background-hovered;
+	-fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: -col-btn-list-border-hovered;
+	-fx-text-fill: -col-btn-list-text-fill;
 }

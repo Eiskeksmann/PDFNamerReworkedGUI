@@ -2,27 +2,22 @@ package sample;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import util.Constants;
 import util.ExcelReader;
+import util.NameSheme;
 import util.PathReader;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
-import java.util.StringTokenizer;
 
 public class Controller implements Initializable {
 
@@ -38,7 +33,8 @@ public class Controller implements Initializable {
     private ExcelReader er;
     private DC dc;
     private FC fc;
-    private ScrollableVBoxManager svm;
+    private ScrollableVBoxManager<File> svm_pdf;
+    private ScrollableVBoxManager<NameSheme> svm_excel;
 
     @FXML private ToggleButton cmd_nav_settings, cmd_nav_pdfnamer, cmd_nav_alfrescoimport,
             cmd_settings_description_allgemein, cmd_settings_description_pdfnamer,
@@ -51,7 +47,7 @@ public class Controller implements Initializable {
             pan_pdfnamer_rename_content, pan_alfrescoimport_import_content;
     @FXML private ChoiceBox<String> cb_settings_pdfnamer_billtype, cb_settings_alfrescoimport_trate;
 
-    @FXML private VBox vbx_pdfnamer_scans_content;
+    @FXML private VBox vbx_pdfnamer_scans_content, vbx_pdfnamer_excel_content;
     @FXML private Button cmd_pdfnamer_import_scans, cmd_pdfnamer_excel_import;
 
 
@@ -97,7 +93,8 @@ public class Controller implements Initializable {
         cb_settings_pdfnamer_billtype.getItems().add("KK");
         cb_settings_pdfnamer_billtype.setValue("ER");
         //PDFNamer
-        svm = new ScrollableVBoxManager(vbx_pdfnamer_scans_content);
+        svm_pdf = new ScrollableVBoxManager<File>(vbx_pdfnamer_scans_content);
+        svm_excel = new ScrollableVBoxManager<NameSheme>(vbx_pdfnamer_excel_content);
     }
 
     //GETTER - SETTER
@@ -199,7 +196,7 @@ public class Controller implements Initializable {
             pr = new PathReader(f,"PDF", cb_settings_pdfnamer_billtype.getValue(), "SCAN");
             if(pr.getProcces() != null && pr.getProcces().length > 0){
 
-                for(File pdf : pr.getProcces()) svm.addLink(pdf);
+                for(File pdf : pr.getProcces()) svm_pdf.addLink(pdf, pdf.getName());
 
                 //am.setScan_condition(true);
                 //if(cb_scan_setouput.isSelected()) {
@@ -228,8 +225,12 @@ public class Controller implements Initializable {
             if(new File(f1.getParent() +"\\GUIExport.xlsx").exists()) {
 
                 File f2 = new File(f1.getParent() + "\\GUIExport.xlsx");
-                ExcelReader er = new ExcelReader(f2,f1, "A");
+                ExcelReader er = new ExcelReader(f2,f1, "File", cb_settings_pdfnamer_billtype.getValue());
                 er.formContent();
+                er.sortInput();
+                for(NameSheme ns : er.getShemes()){
+                    svm_excel.addLink(ns, ns.getName());
+                }
 
             } else System.out.println("GUIExport.xlsx - not found or renamed in Directory | " + f1.getPath());
         }

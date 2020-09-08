@@ -53,7 +53,7 @@ public class Controller implements Initializable {
     @FXML private VBox vbx_pdfnamer_scans_content, vbx_pdfnamer_excel_content;
     @FXML private Button cmd_pdfnamer_import_scans, cmd_pdfnamer_excel_import;
     @FXML private CheckBox cbx_pdfnamer_import_sa, cbx_pdfnamer_import_da, cbx_pdfnamer_excel_sa, cbx_pdfnamer_excel_da;
-    @FXML private ToggleButton cmd_pdfnamer_import_delete_selected, cmd_pdfnamer_excel_delete_selected;
+    @FXML private Button cmd_pdfnamer_import_delete_selected, cmd_pdfnamer_excel_delete_selected;
 
 
     //INIT

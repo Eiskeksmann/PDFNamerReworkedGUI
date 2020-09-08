@@ -1,14 +1,14 @@
 package sample;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ToggleButton;
 
 public abstract class ImportManager {
 
     protected boolean isLinked;
     protected CheckBox cbx_sa;
     protected CheckBox cbx_da;
-    protected ToggleButton del;
+    protected Button del;
 
     public boolean isLinked(){ return isLinked; }
     public abstract void selectAll();

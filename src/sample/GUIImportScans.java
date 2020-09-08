@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
 import javafx.util.Pair;
@@ -10,8 +11,11 @@ public class GUIImportScans extends ImportManager{
 
     private ScrollableVBoxManager<File> vb;
     private boolean isLinked;
-    public GUIImportScans(ToggleButton tb_del, CheckBox sa, CheckBox da, ScrollableVBoxManager vb){
+    private ToggleGUI tgui;
 
+    public GUIImportScans(Button tb_del, CheckBox sa, CheckBox da, ScrollableVBoxManager vb){
+
+        this.tgui = new ToggleGUI(sa, da);
         this.vb = vb;
         this.isLinked = false;
         super.del = tb_del;
@@ -33,20 +37,32 @@ public class GUIImportScans extends ImportManager{
 
     @Override
     public void selectAll() {
-        if(isLinked)
-        vb.selectAll();
+        if(isLinked) {
+            vb.selectAll();
+            tgui.toggle(cbx_sa);
+            del.setDisable(false);
+        }
     }
 
     @Override
     public void deselectAll() {
-        if(isLinked)
-        vb.deselectAll();
+        if(isLinked) {
+            vb.deselectAll();
+            tgui.toggle(cbx_da);
+            del.setDisable(true);
+        }
     }
 
     @Override
     public void removeSelected() {
         if(isLinked)
         vb.removeSelected();
+        if(vb.getLink().size() == 0) {
+
+            disableGUI();
+            isLinked = false;
+            del.setDisable(true);
+        }
     }
 
     @Override
@@ -54,6 +70,12 @@ public class GUIImportScans extends ImportManager{
 
         cbx_sa.setDisable(false);
         cbx_da.setDisable(false);
+    }
+
+    private void disableGUI(){
+
+        cbx_da.setDisable(true);
+        cbx_sa.setDisable(true);
     }
 
     public ArrayList<File> getSelectedData(){

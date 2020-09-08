@@ -391,14 +391,14 @@
                                                 </Button>
                                                 <CheckBox fx:id="cbx_pdfnamer_import_sa" maxHeight="25.0" maxWidth="125.0" minHeight="25.0" minWidth="125.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#cbxPDFNamerImportSAClicked" prefHeight="25.0" prefWidth="125.0" styleClass="cbx-content" text="Select All" textFill="WHITE" />
                                                 <CheckBox fx:id="cbx_pdfnamer_import_da" maxHeight="25.0" maxWidth="125.0" minHeight="25.0" minWidth="125.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#cbxPDFNamerImportDAClicked" prefHeight="25.0" prefWidth="125.0" styleClass="cbx-content" text="Deselect All" textFill="WHITE" />
-                                                <ToggleButton fx:id="cmd_pdfnamer_import_delete_selected" alignment="BASELINE_LEFT" disable="true" graphicTextGap="8.0" maxHeight="25.0" maxWidth="125.0" minHeight="25.0" minWidth="125.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#cmdPDFNamerImportDeleteSelectedClicked" prefHeight="25.0" prefWidth="125.0" styleClass="btn-nav" text="Delete Selected">
+                                                <Button fx:id="cmd_pdfnamer_import_delete_selected" alignment="BASELINE_LEFT" disable="true" graphicTextGap="8.0" maxHeight="25.0" maxWidth="125.0" minHeight="25.0" minWidth="125.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#cmdPDFNamerImportDeleteSelectedClicked" prefHeight="25.0" prefWidth="125.0" styleClass="btn-nav" text="Delete Selected">
                                                    <opaqueInsets>
                                                       <Insets />
                                                    </opaqueInsets>
                                                    <graphic>
                                                       <FontAwesomeIconView glyphName="WRENCH" size="20" styleClass="icon-btn-nav" />
                                                    </graphic>
-                                                </ToggleButton>
+                                                </Button>
                                              </children>
                                              <HBox.margin>
                                                 <Insets bottom="20.0" left="20.0" right="10.0" top="20.0" />
@@ -441,14 +441,14 @@
                                                 </Button>
                                                 <CheckBox fx:id="cbx_pdfnamer_excel_sa" maxHeight="25.0" maxWidth="125.0" minHeight="25.0" minWidth="125.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#cbxPDFNamerExcelSAClicked" prefHeight="25.0" prefWidth="125.0" styleClass="cbx-content" text="Select All" textFill="WHITE" />
                                                 <CheckBox fx:id="cbx_pdfnamer_excel_da" maxHeight="25.0" maxWidth="125.0" minHeight="25.0" minWidth="125.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#cbxPDFNamerExcelDAClicked" prefHeight="25.0" prefWidth="125.0" styleClass="cbx-content" text="Deselect All" textFill="WHITE" />
-                                                <ToggleButton fx:id="cmd_pdfnamer_excel_delete_selected" alignment="BASELINE_LEFT" disable="true" graphicTextGap="8.0" maxHeight="25.0" maxWidth="125.0" minHeight="25.0" minWidth="125.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#cmdPDFNamerExcelDeleteSelectedClicked" prefHeight="25.0" prefWidth="125.0" styleClass="btn-nav" text="Delete Selected">
+                                                <Button fx:id="cmd_pdfnamer_excel_delete_selected" alignment="BASELINE_LEFT" disable="true" graphicTextGap="8.0" maxHeight="25.0" maxWidth="125.0" minHeight="25.0" minWidth="125.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#cmdPDFNamerExcelDeleteSelectedClicked" prefHeight="25.0" prefWidth="125.0" styleClass="btn-nav" text="Delete Selected">
                                                    <opaqueInsets>
                                                       <Insets />
                                                    </opaqueInsets>
                                                    <graphic>
                                                       <FontAwesomeIconView glyphName="WRENCH" size="20" styleClass="icon-btn-nav" />
                                                    </graphic>
-                                                </ToggleButton>
+                                                </Button>
                                              </children>
                                              <HBox.margin>
                                                 <Insets bottom="20.0" left="20.0" right="10.0" top="20.0" />

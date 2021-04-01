@@ -1,23 +1,32 @@
 package sample;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
+import javafx.geometry.Pos;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Pair;
+
+import javax.xml.soap.Node;
 import java.util.ArrayList;
 
 public class ScrollableVBoxManager<L> {
 
     private VBox parent;
     private ArrayList<Pair<L ,ToggleButton>> link;
-    private Button del;
+    private ImportManager im;
 
-    public ScrollableVBoxManager(VBox parent){
+    public ScrollableVBoxManager(VBox parent, ImportManager im){
 
         this.parent = parent;
+        System.out.println(parent);
         this.link = new ArrayList<Pair<L, ToggleButton>>();
+        this.im = im;
     }
 
     private EventHandler<ActionEvent> createTBHandler(){
@@ -27,8 +36,14 @@ public class ScrollableVBoxManager<L> {
             @Override
             public void handle(ActionEvent event) {
 
+                im.tgui.reset();
                 ToggleButton selection = (ToggleButton) event.getSource();
-                if(selection.isSelected()) del.setDisable(false);
+                if(selection.isSelected()) {
+
+                    im.send.setDisable(false);
+                    im.del.setDisable(false);
+
+                }
                 else if (!selection.isSelected()){
 
                     boolean b = false;
@@ -39,7 +54,11 @@ public class ScrollableVBoxManager<L> {
                             break;
                         }
                     }
-                    if(!b) del.setDisable(true);
+                    if(!b) {
+
+                        im.send.setDisable(true);
+                        im.del.setDisable(true);
+                    }
                 }
             }
         };
@@ -47,19 +66,35 @@ public class ScrollableVBoxManager<L> {
         return eh;
     }
 
-    public void addDelButton(Button del){
+    public ArrayList<L> getSelectedItems(){
 
-        this.del = del;
+        ArrayList<L> ret = new ArrayList<L>();
+        for(Pair<L, ToggleButton> p : link){
+
+            if(p.getValue().isSelected()) ret.add(p.getKey());
+        }
+        return ret;
     }
 
-    public void addLink(L input, String tb_text){
+    //Standard size 270, 40
+    //Rename Preview 135, 40
+    public void addLink(L input, String tb_text , int width, int height, FontAwesomeIconView icon,
+                        Pos pa, ContentDisplay cd){
 
         ToggleButton tb = new ToggleButton(tb_text);
-        tb.setMaxSize(270,40);
-        tb.setMinSize(270,40);
-        tb.setPrefSize(270, 40);
+        tb.setMaxSize(width, height);
+        tb.setMinSize(width, height);
+        tb.setPrefSize(width, height);
         tb.setId("scrollablevboxbuttonview");
         tb.setOnAction(createTBHandler());
+        if(icon != null && cd != null) {
+
+            icon.setFill(Paint.valueOf("white"));
+            tb.setGraphic(icon);
+            tb.setContentDisplay(cd);
+        }
+        if(pa != null) tb.setAlignment(pa);
+        //if(ta != null) tb.setTextAlignment(ta);
         parent.getChildren().add(tb);
         link.add(new Pair<L, ToggleButton>(input, tb));
     }

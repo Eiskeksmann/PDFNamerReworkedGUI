@@ -67,6 +67,8 @@ Description: Css Stylesheet for PDFNamer
     -col-list-view-background: tranpsarent;
     -col-list-view-accent: #605E5C;
     -col-list-text-fill: #FFFFFF;
+
+    -col-icon-scrollable-vbox-button: #FFFFFF;
 }
 
 /* Pane - Design */
@@ -349,3 +351,9 @@ Description: Css Stylesheet for PDFNamer
     -fx-border-color: -col-btn-list-border-hovered;
 	-fx-text-fill: -col-btn-list-text-fill;
 }
+#scrollablevboxbuttoniconview{
+
+    -fx-background-color: -col-icon-scrollable-vbox-button;
+}
+
+

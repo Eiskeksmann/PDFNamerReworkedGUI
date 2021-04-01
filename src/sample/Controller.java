@@ -38,6 +38,7 @@ public class Controller implements Initializable {
     private ScrollableVBoxManager<NameSheme> svm_excel;
     private GUIImportExcel gui_excel;
     private GUIImportScans gui_scans;
+    private GUIImportRename gui_rename;
 
     @FXML private ToggleButton cmd_nav_settings, cmd_nav_pdfnamer, cmd_nav_alfrescoimport,
             cmd_settings_description_allgemein, cmd_settings_description_pdfnamer,
@@ -53,7 +54,11 @@ public class Controller implements Initializable {
     @FXML private VBox vbx_pdfnamer_scans_content, vbx_pdfnamer_excel_content;
     @FXML private Button cmd_pdfnamer_import_scans, cmd_pdfnamer_excel_import;
     @FXML private CheckBox cbx_pdfnamer_import_sa, cbx_pdfnamer_import_da, cbx_pdfnamer_excel_sa, cbx_pdfnamer_excel_da;
-    @FXML private Button cmd_pdfnamer_import_delete_selected, cmd_pdfnamer_excel_delete_selected;
+    @FXML private Button cmd_pdfnamer_import_delete_selected, cmd_pdfnamer_excel_delete_selected,
+            cmd_pdfnamer_scans_send_selected, cmd_pdfnamer_excel_send_selected;
+    @FXML private Button cmd_pdfnamer_rename_rename, cmd_pdfnamer_rename_delete_selected;
+    @FXML private CheckBox cbx_pdfnamer_rename_sa, cbx_pdfnamer_rename_da;
+    @FXML private VBox vbx_pdfnamer_rename_content_excel, vbx_pdfnamer_rename_content_scan;
 
 
     //INIT
@@ -99,11 +104,19 @@ public class Controller implements Initializable {
         cb_settings_pdfnamer_billtype.setValue("ER");
 
         //PDFNamer
-        svm_pdf = new ScrollableVBoxManager<File>(vbx_pdfnamer_scans_content);
-        svm_excel = new ScrollableVBoxManager<NameSheme>(vbx_pdfnamer_excel_content);
+        //svm_pdf = new ScrollableVBoxManager<File>(vbx_pdfnamer_scans_content);
+        //svm_excel = new ScrollableVBoxManager<NameSheme>(vbx_pdfnamer_excel_content);
 
-        gui_excel = new GUIImportExcel(cmd_pdfnamer_excel_delete_selected, cbx_pdfnamer_excel_sa, cbx_pdfnamer_excel_da, svm_excel);
-        gui_scans = new GUIImportScans(cmd_pdfnamer_import_delete_selected, cbx_pdfnamer_import_sa, cbx_pdfnamer_import_da, svm_pdf);
+        gui_excel = new GUIImportExcel(cmd_pdfnamer_excel_delete_selected, cmd_pdfnamer_excel_send_selected,
+                cbx_pdfnamer_excel_sa, cbx_pdfnamer_excel_da, vbx_pdfnamer_excel_content);
+        svm_excel = gui_excel.getVb();
+
+        gui_scans = new GUIImportScans(cmd_pdfnamer_import_delete_selected, cmd_pdfnamer_scans_send_selected,
+                cbx_pdfnamer_import_sa, cbx_pdfnamer_import_da, vbx_pdfnamer_scans_content);
+        svm_pdf = gui_scans.getVb();
+
+        gui_rename = new GUIImportRename(cmd_pdfnamer_rename_delete_selected,cmd_pdfnamer_rename_rename,cbx_pdfnamer_rename_sa,
+                cbx_pdfnamer_rename_da,vbx_pdfnamer_rename_content_excel,vbx_pdfnamer_rename_content_scan);
     }
 
     //GETTER - SETTER
@@ -205,9 +218,10 @@ public class Controller implements Initializable {
             pr = new PathReader(f,"PDF", cb_settings_pdfnamer_billtype.getValue(), "SCAN");
             if(pr.getProcces() != null && pr.getProcces().length > 0){
 
-                for(File pdf : pr.getProcces()) svm_pdf.addLink(pdf, pdf.getName());
+                for(File pdf : pr.getProcces()) svm_pdf.addLink(pdf, pdf.getName(), 270, 40,
+                        null, null, null);
+                gui_scans.setLinked(true);
                 gui_scans.enableGUI();
-                gui_scans.setLinked();
                 //am.setScan_condition(true);
                 //if(cb_scan_setouput.isSelected()) {
                 //    am.setOutput_condition(true);
@@ -241,6 +255,12 @@ public class Controller implements Initializable {
         gui_scans.deselectAll();
     }
 
+    public void cmdPDFNamerScansSendSelectedClicked(){
+
+        gui_rename.sendInScans(gui_scans.sendSelected());
+        gui_scans.removeSelected();
+    }
+
     //CONTENT - PDFNAMER - EXCEL
     public void cmdPDFNamerImportExcelClicked() throws IOException {
 
@@ -254,9 +274,13 @@ public class Controller implements Initializable {
                 er.formContent();
                 er.sortInput();
                 for(NameSheme ns : er.getShemes()){
-                    svm_excel.addLink(ns, ns.getName());
+                    svm_excel.addLink(ns, ns.getName(), 270, 40,
+                            null, null, null);
                 }
-                gui_excel.enableGUI();
+                if(er.getShemes().size() > 0){
+                    gui_excel.setLinked(true);
+                    gui_excel.enableGUI();
+                } else System.out.println("No Valid ER- Names Found in DatenAufbereiter ...");
 
             } else System.out.println("GUIExport.xlsx - not found or renamed in Directory | " + f1.getPath());
         }
@@ -279,7 +303,17 @@ public class Controller implements Initializable {
         gui_excel.deselectAll();
     }
 
+    public void cmdPDFNamerExcelSendSelectedClicked(){
+
+        gui_rename.sendInNameShemes(gui_excel.sendSelected());
+        gui_excel.removeSelected();
+    }
+
     //CONTENT - PDFNAMER - RENAME
 
+    public void cmdPDFNamerRenameDeleteSelectedClicked(){
+
+        gui_rename.removeSelected();
+    }
     //CONTENT - ALFRESCOIMPORT - IMPORT
 }

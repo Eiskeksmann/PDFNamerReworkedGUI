@@ -3,24 +3,22 @@ package sample;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 import util.NameSheme;
-
 import java.util.ArrayList;
 
 public class GUIImportExcel extends ImportManager{
 
-    private ArrayList<Pair<NameSheme, ToggleButton>> link;
     private ScrollableVBoxManager<NameSheme> vb;
-    private ToggleGUI tgui;
 
-    public GUIImportExcel(Button tb_del, CheckBox sa, CheckBox da , ScrollableVBoxManager<NameSheme> vb){
+    public GUIImportExcel(Button cmd_del, Button cmd_send, CheckBox sa, CheckBox da , VBox parent){
 
-        this.tgui = new ToggleGUI(sa, da);
-        this.vb = vb;
-        this.isLinked = false;
-        super.del = tb_del;
-        this.vb.addDelButton(super.del);
+        super.tgui = new ToggleGUI(sa, da);
+        this.vb = new ScrollableVBoxManager<NameSheme>(parent, this);
+        super.isLinked = false;
+        super.del = cmd_del;
+        super.send = cmd_send;
         super.cbx_sa = sa;
         super.cbx_sa.setDisable(true);
         super.cbx_da = da;
@@ -34,6 +32,7 @@ public class GUIImportExcel extends ImportManager{
             vb.selectAll();
             tgui.toggle(cbx_sa);
             del.setDisable(false);
+            send.setDisable(false);
         }
     }
 
@@ -44,6 +43,7 @@ public class GUIImportExcel extends ImportManager{
             vb.deselectAll();
             tgui.toggle(cbx_da);
             del.setDisable(true);
+            send.setDisable(true);
         }
     }
 
@@ -52,26 +52,45 @@ public class GUIImportExcel extends ImportManager{
 
         if(isLinked) {
             vb.removeSelected();
+            if (vb.getLink().size() == 0) {
+
+                disableGUI();
+                isLinked = false;
+
+            } else {
+
+                tgui.reset();
+                del.setDisable(true);
+                send.setDisable(true);
+            }
         }
-        if(vb.getLink().size() == 0) {
-
-            disableGUI();
-            isLinked = false;
-            del.setDisable(true);
-        }
-    }
-
-    private void disableGUI(){
-
-        cbx_da.setDisable(true);
-        cbx_sa.setDisable(true);
     }
 
     @Override
     public void enableGUI() {
 
-        cbx_da.setDisable(false);
-        cbx_sa.setDisable(false);
+        if(isLinked) {
+            cbx_da.setDisable(false);
+            cbx_sa.setDisable(false);
+        }
+    }
+
+    @Override
+    public void disableGUI() {
+
+        cbx_da.setDisable(true);
+        cbx_sa.setDisable(true);
+        del.setDisable(true);
+        send.setDisable(true);
+    }
+
+    public ArrayList<NameSheme> sendSelected(){
+
+        return vb.getSelectedItems();
+    }
+
+    public ScrollableVBoxManager<NameSheme> getVb(){
+        return this.vb;
     }
 
     public ArrayList<NameSheme> getSelectedData(){
